@@ -1,0 +1,233 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================
+   CSS VARIABLES & ROOT
+=========================== */
+:root {
+  --brand-primary: #FF6B00;
+  --brand-dark: #1a1a2e;
+  --transition-base: 0.3s ease;
+}
+
+/* ===========================
+   GLOBAL RESET & BASE
+=========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  @apply bg-white text-gray-900 transition-colors duration-300;
+}
+
+body.dark {
+  @apply bg-dark-900 text-gray-100;
+}
+
+/* ===========================
+   SCROLLBAR CUSTOM
+=========================== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { @apply bg-gray-100 dark:bg-dark-800; }
+::-webkit-scrollbar-thumb { @apply bg-brand-500 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-brand-600; }
+
+/* ===========================
+   PERFORMANCE HINTS
+=========================== */
+/* Only promote the spinner to GPU layer — NOT pulse/bounce (causes memory bloat) */
+.animate-spin {
+  will-change: transform;
+}
+
+/* Smoother image renders */
+img {
+  content-visibility: auto;
+}
+
+/* Reduce pulse animation frequency — default Tailwind is 2s, we slow it down
+   to cut GPU repaint rate on decorative background elements */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.1; }
+  50%       { opacity: 0.2; }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+/* Reduce transition cost on scroll-heavy elements */
+.sidebar-link {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Reduce font load flash */
+html { font-display: swap; }
+
+
+/* ===========================
+   UTILITY CLASSES
+=========================== */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-brand-500 text-white font-heading font-semibold rounded-lg
+    hover:bg-brand-600 active:scale-95 transition-all duration-200 shadow-lg shadow-brand-500/30;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-brand-500 text-brand-500 font-heading font-semibold rounded-lg
+    hover:bg-brand-500 hover:text-white active:scale-95 transition-all duration-200;
+  }
+
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-dark-800 text-white font-heading font-semibold rounded-lg
+    hover:bg-dark-700 active:scale-95 transition-all duration-200 border border-dark-600;
+  }
+
+  .card {
+    @apply bg-white dark:bg-dark-700 rounded-2xl shadow-lg border border-gray-100 dark:border-dark-600 transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply card hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/10;
+  }
+
+  .section-title {
+    @apply font-display text-5xl md:text-6xl text-dark-800 dark:text-white leading-none tracking-wide;
+  }
+
+  .section-subtitle {
+    @apply font-body text-lg text-gray-500 dark:text-gray-400 max-w-2xl;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-success { @apply badge bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400; }
+  .badge-warning { @apply badge bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400; }
+  .badge-danger  { @apply badge bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400; }
+  .badge-info    { @apply badge bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400; }
+  .badge-brand   { @apply badge bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-400; }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-dark-500 bg-white dark:bg-dark-600
+    text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500
+    focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent
+    transition-all duration-200 font-body;
+  }
+
+  .label {
+    @apply block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 font-body;
+  }
+
+  .glass {
+    @apply backdrop-blur-md bg-white/10 dark:bg-dark-800/40 border border-white/20 dark:border-dark-600/50;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400
+    hover:bg-brand-50 dark:hover:bg-brand-500/10 hover:text-brand-600 dark:hover:text-brand-400
+    font-body font-semibold transition-all duration-200 cursor-pointer;
+  }
+
+  .sidebar-link.active {
+    @apply bg-brand-500 text-white hover:bg-brand-600 hover:text-white dark:bg-brand-500 dark:text-white;
+  }
+
+  .stat-card {
+    @apply card p-6 flex flex-col gap-3;
+  }
+
+  .table-th {
+    @apply px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400;
+  }
+
+  .table-td {
+    @apply px-4 py-3 text-sm text-gray-700 dark:text-gray-300;
+  }
+
+  .table-row {
+    @apply hover:bg-gray-50 dark:hover:bg-dark-600/50 transition-colors duration-150;
+  }
+}
+
+/* ===========================
+   SWIPER OVERRIDE
+=========================== */
+.swiper-button-next,
+.swiper-button-prev {
+  @apply text-brand-500 !important;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-brand-500 !important;
+}
+
+/* ===========================
+   HERO GRADIENT ANIMATION
+=========================== */
+@keyframes heroShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animated-gradient {
+  background: linear-gradient(-45deg, #FF6B00, #ff8c00, #1a1a2e, #2d2d5e);
+  background-size: 400% 400%;
+  animation: heroShift 8s ease infinite;
+}
+
+/* ===========================
+   PAGE TRANSITIONS
+=========================== */
+.page-enter {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* ===========================
+   LOADING SPINNER
+=========================== */
+.spinner {
+  border: 3px solid rgba(255, 107, 0, 0.2);
+  border-top-color: #FF6B00;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===========================
+   TOAST OVERRIDE
+=========================== */
+.react-hot-toast {
+  font-family: 'Nunito', sans-serif !important;
+}
+
+/* ===========================
+   PAINT CONTAINMENT
+=========================== */
+/* Stop browser painting hidden dashboard sections */
+main {
+  contain: layout style;
+}
+
+/* Prevent blur-3xl filter from triggering GPU composite on every frame */
+.blur-3xl, .blur-2xl, .blur-xl {
+  will-change: auto;
+}
+
+/* Recharts SVG — no pointer events on non-interactive parts */
+.recharts-surface {
+  overflow: visible;
+}
